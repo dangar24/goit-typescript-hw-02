@@ -7,26 +7,28 @@ import ImageModal from './components/ImageModal/ImageModal'
 import { useState, useEffect } from 'react'
 import { fetchGallery } from './components/Gallery-api'
 import { Toaster } from 'react-hot-toast';
+import { ItemGl, ModalImage } from './types'
 import './App.css'
+
 
 function App() {
   
-  const [search, setSearch] = useState('')
-  const [itemGl, setItemGl] = useState([])
-  const [page, setPage] = useState(1)
-  const [loader, setLoader] = useState(false)
-  const [error, setError] = useState(false)
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [modalImage, setModalImage] = useState({});
+  const [search, setSearch] = useState<string>('');
+  const [itemGl, setItemGl] = useState<ItemGl[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [loader, setLoader] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [modalImage, setModalImage] = useState<ModalImage>({ alt:'', src:''});
 
-  const openModal = data => {
+  const openModal = (data:ModalImage): void => {    
     setIsOpen(true);
     setModalImage(data);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsOpen(false);
-    setModalImage({});
+    setModalImage({ alt:'', src:''});
   };
 
   let endGallery = true;
@@ -34,13 +36,13 @@ function App() {
     endGallery = false
   }
 
-  const handleSearche = async (value) => {
+  const handleSearche = async (value:string) => {    
     setPage(1)
     setSearch(value);
     setItemGl([]);
   }
 
-  const loadMoreItem = () => {
+  const loadMoreItem = ():void => {
     setPage(page + 1);
   }
 
@@ -49,14 +51,15 @@ function App() {
       return
     }
     
-    async function getGallery() {
+    async function getGallery () {
       try {
         setError(false)
         setLoader(true)
-        const data = await fetchGallery(search, page);
-        setItemGl(prevData => {
-          return [...prevData, ...data]
-        });
+        const data: ItemGl[] = await fetchGallery(search, page);
+        setItemGl([...itemGl, ...data])
+        // setItemGl(prevData => {
+        //   return [...prevData, ...data]
+        // });
       }
       catch (error) {
         setError(true)

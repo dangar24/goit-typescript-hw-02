@@ -2,7 +2,11 @@ import { Formik, Form, Field } from "formik";
 import toast from 'react-hot-toast';
 import css from './SearchBar.module.css'
 
-export default function SearchBar({onSearch}) {
+interface SearchBarProps {
+    onSearch: (value:string) => void
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({onSearch}) => {
 
     
     return <header>
@@ -29,3 +33,5 @@ export default function SearchBar({onSearch}) {
         </Formik>
 </header>
 }
+
+export default SearchBar;

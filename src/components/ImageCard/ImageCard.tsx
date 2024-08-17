@@ -1,6 +1,13 @@
 import css from './ImageCard.module.css'
+import { ImgItem, ModalImage } from '../../types'
 
-export default function ImageItem({ data, openModal }) {
+interface ImageItemProps {
+    data: ImgItem,
+    openModal:(data:ModalImage)=>void
+}
+
+const ImageItem:React.FC<ImageItemProps> = ({ data, openModal }) => {
+    
     return <div className={css.item}>
         <img
             width={400}
@@ -12,3 +19,5 @@ export default function ImageItem({ data, openModal }) {
     </div>
 
 }
+
+export default ImageItem;

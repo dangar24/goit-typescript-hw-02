@@ -20,7 +20,14 @@ const customStyles = {
 },
 };
 
-export default function ImageModal({modalIsOpen, closeModal, src, alt}) {
+interface ImageModalProps {
+    modalIsOpen:boolean,
+    closeModal:()=>void,
+    src: string,
+    alt: string,
+}
+
+const ImageModal:React.FC<ImageModalProps> = ({modalIsOpen, closeModal, src, alt}) => {
     return <> <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -33,3 +40,5 @@ export default function ImageModal({modalIsOpen, closeModal, src, alt}) {
     </Modal>
     </>
 }
+
+export default ImageModal;
